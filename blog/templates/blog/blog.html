@@ -1,0 +1,78 @@
+{% extends './_base.html' %}
+
+{% block content %}
+  <div class="hero overlay inner-page bg-primary py-5">
+    <div class="container">
+      <div class="row align-items-center justify-content-center text-center pt-5">
+        <div class="col-lg-6">
+          <h1 class="heading text-white mb-3" data-aos="fade-up">Blog</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section search-result-wrap">
+    <div class="container">
+      
+      <div class="row posts-entry">
+        <div class="col-lg-8">
+          
+          {% for post in posts %}
+            
+          {% include './post_overview.html' with post=post %}
+            
+          {% endfor %}
+
+          <div class="row text-start pt-5 border-top">
+            <div class="col-md-12">
+              <div class="custom-pagination">
+                
+                {% if page_obj.has_previous %}
+                <a href="?page=1">1</a>
+                
+                {% if page_obj.previous_page_number != 1 %}
+                  
+                  <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                {% endif %}
+                  
+                  
+                {% endif %}
+                  
+                <span>{{ page_obj.number }}</span>
+
+                
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                  
+                {% endif %}
+
+                
+                {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                  
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-4 sidebar">
+
+          <div class="sidebar-box search-form-wrap mb-4">
+            <form action="#" class="sidebar-search-form">
+              <span class="bi-search"></span>
+              <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter">
+            </form>
+          </div>
+          {% include './sidebar_popular_posts.html' with popular_posts=popular_posts %}
+
+          {% include './sidebar_categories.html' %}
+          {% include './sidebar_tags.html' %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {% endblock content %}

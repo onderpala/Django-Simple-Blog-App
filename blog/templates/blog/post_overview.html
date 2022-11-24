@@ -1,0 +1,13 @@
+
+            
+          <div class="blog-entry d-flex blog-entry-search-item">
+            <a href="{{ post.get_absolute_url }}" class="img-link me-4">
+              <img src="{{ post.thumbnail.url }}" alt="Image" class="img-fluid">
+            </a>
+            <div>
+              <span class="date">{{ post.created | date:"M d, Y" }} &bullet; <a href="#">{{ post.category.first }}</a></span>
+              <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+              <p>{{ post.summary }}</p>
+              <p><a href="{{ post.get_absolute_url }}" class="btn btn-sm btn-outline-primary">Read More</a></p>
+            </div>
+          </div>

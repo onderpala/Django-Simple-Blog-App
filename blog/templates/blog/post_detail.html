@@ -1,0 +1,112 @@
+{% extends './_base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+  <div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url('{{ post.thumbnail.url }}');">
+    <div class="container">
+      <div class="row same-height justify-content-center">
+        <div class="col-md-6">
+          <div class="post-entry text-center">
+            <h1 class="mb-4">{{ post.title }}</h1>
+            <div class="post-meta align-items-center text-center">
+              <span>{{ post.created | date:"M d, Y" }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="row blog-entries element-animate">
+
+        <div class="col-md-12 col-lg-8 main-content">
+
+          <div class="post-content-body">
+            {{ post.content | safe }}
+          </div>
+            
+          <div class="pt-5">
+            <p>
+
+            {% if post.category.all %}
+              Categories: 
+              {% for category in post.category.all %}
+                <a href="">{{ category }}</a>, 
+              {% endfor %}
+            {% endif %}
+            
+            {% if post.tag.all %}
+              Tags: 
+              {% for tag in post.tag.all %}
+                <a href="#">#{{ tag.label | lower }}</a>
+              {% endfor %}
+            {% endif %}
+
+            </p>
+          </div>
+
+          <div class="pt-5 comment-wrap">
+            <h3 class="mb-5 heading">{{comments.count}} Comments</h3>
+            <ul class="comment-list">
+              
+              {% for comment in comments %} 
+                
+              {% include './post_comment.html' with comment=comment %}
+                
+              {% endfor %}
+            </ul>
+            <!-- END comment-list -->
+
+            <div class="comment-form-wrap pt-5">
+              <h3 class="mb-5">Leave a comment</h3>
+              
+              <form method="POST" class="p-5 bg-light">
+                {% csrf_token %}
+                {% for field in form %}
+                
+                {% if field.is_hidden %}
+                  {{field}}
+                  {% else %}
+                  <div class="form-group">
+                    {{field.label_tag}} *
+                    {{field}}
+                  </div>
+
+                {% endif %}
+
+                  
+                
+                  
+                {% endfor %}
+                <div class="form-group">
+                  <input type="submit" value="Post Comment" class="btn btn-primary">
+                </div>
+
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- END main-content -->
+
+        <div class="col-md-12 col-lg-4 sidebar">
+          
+          {% include './sidebar_popular_posts.html' with popular_posts=popular_posts %}
+          {% include './sidebar_categories.html' with categories=categories %}
+          {% include './sidebar_tags.html' with tags=tags %}
+        </div>
+        <!-- END sidebar -->
+
+      </div>
+    </div>
+  </section>
+
+
+  
+{% endblock content %}

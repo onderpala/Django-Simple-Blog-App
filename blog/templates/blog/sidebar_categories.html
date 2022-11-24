@@ -1,0 +1,11 @@
+
+          <div class="sidebar-box">
+            <h3 class="heading">Categories</h3>
+            <ul class="categories">
+              {% for key, value in categories.items %}
+              <li><a href="#">{{ key.title }} <span>({{ value }})</span></a></li>
+                
+              {% endfor %}
+                
+            </ul>
+          </div>
